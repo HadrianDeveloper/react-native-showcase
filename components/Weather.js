@@ -2,9 +2,19 @@ import { StyleSheet, Platform, Text, View, KeyboardAvoidingView, TouchableWithou
 import SearchInput from "./basicComponents/SearchInput";
 import LogoutButton from "./BasicComponents/LogoutButton";
 import getWeatherImage from "../utils/getWeatherImage";
+import { useState } from "react";
 
 
 export default function Weather() {
+
+    const [searchterm, setSearchterm] = useState('San Francisco');
+
+    function handleSubmit(city) {
+        if (city) {
+            setSearchterm(city);
+        }
+    };
+
     return (
         <KeyboardAvoidingView 
             style={s.container}
@@ -16,10 +26,12 @@ export default function Weather() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={s.contentContainer}>
                 <View style={[s.container, {flex: 5, justifyContent: 'center'}]}>
-                    <Text style={s.largeText}>London</Text>
+                    <Text style={s.largeText}>{searchterm}</Text>
                     <Text style={s.smallText}>Light clouds</Text>
                     <Text style={[s.largeText, {marginBottom: 40}]}>24°</Text>
-                    <SearchInput placeholder="enter city name" />
+                    <SearchInput 
+                        placeholder="enter city name"
+                        onSubmit={handleSubmit} />
                 </View>
                 <View style={[s.container, {flex: 2}]}>
                     <LogoutButton />
