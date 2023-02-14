@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
 
-export default function SearchInput({placeholder}) {
+export default function SearchInput({placeholder, onSubmit}) {
+
+    const [city, setCity] = useState('')
+
     return (
         <TextInput 
             placeholder={placeholder}
@@ -9,7 +13,10 @@ export default function SearchInput({placeholder}) {
             autoCorrect={false}
             clearButtonMode='always'
             style={s.input}
-            underlineColorAndroid='transparent' />
+            underlineColorAndroid='transparent'
+            value={city}
+            onChangeText={(text => setCity(text))}
+            onSubmitEditing={() => onSubmit(city)} />
     )
 };
 
