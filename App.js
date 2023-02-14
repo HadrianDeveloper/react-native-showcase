@@ -1,16 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import {useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+//import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
+import { AuthContext } from './contexts/AuthContext';
+import Landing from './components/Landing';
 
 export default function App() {
+
+  const [userToken, setUserToken] = useState(null);
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContext.Provider value={{userToken, setUserToken}}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{title: 'Hadrians PowerAUTH'}}>
+    
+          {!userToken ? 
+            (<>
+              <Stack.Screen name='Landing' component={Landing} />
+              <Stack.Screen name='Signup' component={Signup} />
+              <Stack.Screen name='Login' component={Login} />
+            </>)
+          :
+            <Stack.Screen name='Home' component={Home} />
+          }
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
