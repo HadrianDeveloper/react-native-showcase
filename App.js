@@ -7,12 +7,13 @@ import { StyleSheet } from 'react-native';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
+import Weather from './components/Weather';
 import { AuthContext } from './contexts/AuthContext';
 import Landing from './components/Landing';
 
 export default function App() {
 
-  const [userToken, setUserToken] = useState(null);
+  const [userToken, setUserToken] = useState('adrian'); // <--------make null when rady for production
   const Stack = createNativeStackNavigator();
 
   return (
@@ -27,7 +28,8 @@ export default function App() {
               <Stack.Screen name='Login' component={Login} />
             </>)
           :
-            <Stack.Screen name='Home' component={Home} />
+            //<Stack.Screen name='Home' component={Home} />
+            <Stack.Screen name='Weather' component={Weather} />
           }
 
         </Stack.Navigator>

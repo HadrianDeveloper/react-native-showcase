@@ -1,16 +1,26 @@
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useContext, useState } from 'react';
+import { login } from '../Utils';
+import { Button, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Login() {
-
+  
+  const { setUserToken } = useContext(AuthContext)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
     return (
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={5}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={s.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={s.inner}>
           <Text style={s.hint}>Enter your username</Text>
           <TextInput 
+            autoFocus
             placeholder='username'
+            autoCapitalize='none'
             value={username}
             onChangeText={(text) => setUsername(text)}
             style={s.input}
@@ -25,8 +35,12 @@ export default function Login() {
           />
           <Button
             title='submit'
-           />
+            disabled={!username || !password}
+            onPress={() => login(username, password, setUserToken)}
+            />
         </View>
+      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     )
 };
 

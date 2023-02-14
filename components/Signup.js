@@ -17,7 +17,7 @@ export default function Signup() {
 
     const { setUserToken } = useContext(AuthContext)
     const [username, setUsername] = useState('');
-    const [pword, setPword] = useState('');
+    const [password, setPassword] = useState('');
     const [pwCheck, setPwCheck] = useState('');
 
     return (
@@ -47,23 +47,23 @@ export default function Signup() {
                     placeholder='password'
                     style={[
                         s.input, 
-                        pwCheck && pword === pwCheck && {borderColor: 'green'}
+                        pwCheck && password === pwCheck && {borderColor: 'green'}
                     ]} 
-                    value={pword}
-                    onChangeText={(text) => setPword(text)} />
+                    value={password}
+                    onChangeText={(text) => setPassword(text)} />
                 </>
             )}
 
-            {pword.length >= 6 && (
+            {password.length >= 6 && (
                 <>
                 <Text style={s.hint}>Re-enter your password</Text>
                 <TextInput
                     secureTextEntry
-                    editable={pword.length >= 6}
+                    editable={password.length >= 6}
                     placeholder='enter password again'
                     style={[
                         s.input, 
-                        pwCheck === pword && {borderColor: 'green'}
+                        pwCheck === password && {borderColor: 'green'}
                     ]}
                     value={pwCheck}
                     onChangeText={(text) => setPwCheck(text)} />
@@ -73,8 +73,8 @@ export default function Signup() {
             <Button
                 title='Submit'
                 style={s.button}
-                disabled={!username || !pword || !pwCheck || pword !== pwCheck}
-                onPress={() => isUsernameUnique(username, pword, setUserToken)}
+                disabled={!username || !password || !pwCheck || password !== pwCheck}
+                onPress={() => isUsernameUnique(username, password, setUserToken)}
             />
         </View>
         </TouchableWithoutFeedback>
