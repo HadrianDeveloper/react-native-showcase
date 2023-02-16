@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import { TextInput, StyleSheet } from "react-native";
 
 export default function SearchInput({placeholder, onSubmit}) {
@@ -9,15 +10,27 @@ export default function SearchInput({placeholder, onSubmit}) {
         <TextInput 
             placeholder={placeholder}
             placeholderTextColor='white'
-            autoCapitalize='none'
+            autoCapitalize='words'
             autoCorrect={false}
             clearButtonMode='always'
             style={s.input}
             underlineColorAndroid='transparent'
             value={city}
             onChangeText={(text => setCity(text))}
-            onSubmitEditing={() => onSubmit(city)} />
+            onSubmitEditing={() => {
+                onSubmit(city);
+                setCity('');
+            }} />
     )
+};
+
+SearchInput.propTypes = {
+    placeholder: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired
+}
+
+SearchInput.defaultProps = {
+    placeholder: ''
 };
 
 const s = StyleSheet.create({

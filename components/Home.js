@@ -6,7 +6,7 @@ export default function Home() {
 
     const {setUserToken} = useContext(AuthContext);
     const [red, setRed] = useState(false);
-    const pressed = {color: 'red'};
+    const pressed = {color: 'red'}; 
 
     return (
         <View style={s.inner}>
