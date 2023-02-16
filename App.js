@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-//import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import Signup from './components/Signup';
@@ -13,7 +12,7 @@ import Landing from './components/Landing';
 
 export default function App() {
 
-  const [userToken, setUserToken] = useState('adrian'); // <--------make null when rady for production
+  const [userToken, setUserToken] = useState(null); 
   const Stack = createNativeStackNavigator();
 
   return (
@@ -27,9 +26,10 @@ export default function App() {
               <Stack.Screen name='Signup' component={Signup} />
               <Stack.Screen name='Login' component={Login} />
             </>)
-          :
-            //<Stack.Screen name='Home' component={Home} />
-            <Stack.Screen name='Weather' component={Weather} />
+          : <>
+              <Stack.Screen name='Home' component={Home} />
+              <Stack.Screen name='Weather' component={Weather} />
+            </>
           }
 
         </Stack.Navigator>

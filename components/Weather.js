@@ -48,11 +48,11 @@ export default function Weather() {
     useEffect(() => {
         if (coords) {
             fetchWeather(coords)
-            .then((res) => {
-                setSearchterm(res.name)
+            .then((data) => {
+                setSearchterm(data.name)
                 setForecast({
-                    temp: res.temp,
-                    weather: res.desc
+                    temp: data.temp,
+                    weather: data.desc
                 });
                 setLoading(false)
             })
@@ -76,7 +76,7 @@ export default function Weather() {
             behavior='padding'>
         <StatusBar barStyle='light-content' />
         <ImageBackground 
-            source={getWeatherImage('Clear')}
+            source={getWeatherImage(forecast.weather)}
             style={s.backgroundContainer}
             imageStyle={s.image}>        
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
