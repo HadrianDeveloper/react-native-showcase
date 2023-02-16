@@ -1,38 +1,72 @@
-import { StyleSheet, Platform, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ImageBackground } from "react-native";
+import { StyleSheet, Platform, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ImageBackground, ActivityIndicator, StatusBar } from "react-native";
 import SearchInput from "./basicComponents/SearchInput";
 import LogoutButton from "./BasicComponents/LogoutButton";
 import getWeatherImage from "../utils/getWeatherImage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchCoordinates, fetchWeather, fetchWeatherB } from "../utils/weatherApi";
 
 
 export default function Weather() {
 
-    const [searchterm, setSearchterm] = useState('San Francisco');
+    const [searchterm, setSearchterm] = useState('London');
+    const [coords, setCoords] = useState({longitude: -0.127, latitude: 51.507});
+    const [loading, setLoading] = useState(false);
+    const [forecast, setForecast] = useState({temp: '', weather: ''});
 
     function handleSubmit(city) {
-        if (city) {
-            setSearchterm(city);
-        }
+        fetchCoordinates(city) 
+        .then((res) => {
+            if (res) {
+                setLoading(true);
+                setSearchterm(city);
+                setCoords({
+                    longitude: res.longitude, 
+                    latitude: res.latitude
+                })
+            } else {
+                alert('No such place!')
+            }
+        })
     };
+
+    // useEffect(() => {
+    //     fetchWeather(coords) // <------------
+    //     .then((res) => {
+    //         setForecast({
+    //             temp: `${res.temperature}°`, 
+    //             weather: res.text
+    //         })
+    //          setLoading(false)
+    //     })
+    // }, [coords]);
+
+    const loadedContent = (
+        <View style={[s.container, {flex: 5, justifyContent: 'center'}]}>
+            <Text style={s.largeText}>{searchterm}</Text>
+            <Text style={s.smallText}>{forecast.weather}</Text>
+            <Text style={[s.largeText, {marginBottom: 40}]}>{forecast.temp}</Text>
+            <SearchInput 
+                placeholder="enter city name"
+                onSubmit={handleSubmit} />
+        </View>
+    );
 
     return (
         <KeyboardAvoidingView 
             style={s.container}
             behavior='padding'>
+        <StatusBar barStyle='light-content' />
         <ImageBackground 
             source={getWeatherImage('Clear')}
             style={s.backgroundContainer}
             imageStyle={s.image}>        
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={s.contentContainer}>
-                <View style={[s.container, {flex: 5, justifyContent: 'center'}]}>
-                    <Text style={s.largeText}>{searchterm}</Text>
-                    <Text style={s.smallText}>Light clouds</Text>
-                    <Text style={[s.largeText, {marginBottom: 40}]}>24°</Text>
-                    <SearchInput 
-                        placeholder="enter city name"
-                        onSubmit={handleSubmit} />
-                </View>
+                <ActivityIndicator 
+                    animating={loading}
+                    color='#0000ff'
+                    size='large' />
+                {!loading && loadedContent}
                 <View style={[s.container, {flex: 2}]}>
                     <LogoutButton />
                 </View>
