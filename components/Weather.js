@@ -1,14 +1,15 @@
 import { StyleSheet, Platform, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ImageBackground, ActivityIndicator, StatusBar } from "react-native";
+import * as ExpoLocation from 'expo-location';
 import SearchInput from "./basicComponents/SearchInput";
 import LogoutButton from "./BasicComponents/LogoutButton";
 import getWeatherImage from "../utils/getWeatherImage";
 import { useState, useEffect } from "react";
-import { fetchCoordinates, fetchWeather, fetchWeatherB } from "../utils/weatherApi";
+import { fetchCoordinates, fetchWeather, fetchWeatherB, fetchPlace } from "../utils/weatherApi";
 
 
 export default function Weather() {
 
-    const [searchterm, setSearchterm] = useState('London');
+    const [searchterm, setSearchterm] = useState(null);
     const [coords, setCoords] = useState({longitude: -0.127, latitude: 51.507});
     const [loading, setLoading] = useState(false);
     const [forecast, setForecast] = useState({temp: '', weather: ''});
@@ -17,7 +18,6 @@ export default function Weather() {
         fetchCoordinates(city) 
         .then((res) => {
             if (res) {
-                setLoading(true);
                 setSearchterm(city);
                 setCoords({
                     longitude: res.longitude, 
@@ -29,16 +29,39 @@ export default function Weather() {
         })
     };
 
-    // useEffect(() => {
-    //     fetchWeather(coords) // <------------
-    //     .then((res) => {
-    //         setForecast({
-    //             temp: `${res.temperature}°`, 
-    //             weather: res.text
-    //         })
-    //          setLoading(false)
-    //     })
-    // }, [coords]);
+    //Detects my location and fetches weather on mount
+    useEffect(() => {
+        (async () => {
+          setLoading(true)
+          let { status } = await ExpoLocation.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            alert('Permission to access location was denied');
+            return;
+          }
+          let myCoords = await ExpoLocation.getCurrentPositionAsync({});
+          let myPlace = await fetchPlace(myCoords.coords.latitude, myCoords.coords.longitude)
+            setCoords({
+                longitude: myCoords.coords.longitude,
+                latitude: myCoords.coords.latitude
+            });
+            setSearchterm(myPlace);
+            setLoading(false);
+        })();
+    }, []);
+
+
+    //Responds to search location inputs
+    useEffect(() => {
+        setLoading(true);
+        fetchWeatherB(coords) // <------------
+        .then((res) => {
+            setForecast({
+                temp: `${res.temperature}°`, 
+                weather: res.text
+            })
+             setLoading(false)
+        })
+    }, [coords]);
 
     const loadedContent = (
         <View style={[s.container, {flex: 5, justifyContent: 'center'}]}>
