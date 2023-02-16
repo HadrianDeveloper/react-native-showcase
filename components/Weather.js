@@ -4,64 +4,60 @@ import SearchInput from "./basicComponents/SearchInput";
 import LogoutButton from "./BasicComponents/LogoutButton";
 import getWeatherImage from "../utils/getWeatherImage";
 import { useState, useEffect } from "react";
-import { fetchCoordinates, fetchWeather, fetchWeatherB, fetchPlace } from "../utils/weatherApi";
+import { fetchWeather } from "../utils/weatherApi";
 
 
 export default function Weather() {
 
     const [searchterm, setSearchterm] = useState(null);
-    const [coords, setCoords] = useState({longitude: -0.127, latitude: 51.507});
-    const [loading, setLoading] = useState(false);
+    const [coords, setCoords] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [forecast, setForecast] = useState({temp: '', weather: ''});
 
     function handleSubmit(city) {
-        fetchCoordinates(city) 
+        setLoading(true);
+        fetchWeather(city)
         .then((res) => {
             if (res) {
-                setSearchterm(city);
-                setCoords({
-                    longitude: res.longitude, 
-                    latitude: res.latitude
-                })
+                setSearchterm(res.name);
+                setForecast({
+                    temp: res.temp,
+                    weather: res.desc
+                });
+                setLoading(false);
             } else {
-                alert('No such place!')
+                alert('Couldn\'t find this place. Try again!')
             }
         })
     };
 
-    //Detects my location and fetches weather on mount
     useEffect(() => {
-        (async () => {
-          setLoading(true)
-          let { status } = await ExpoLocation.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            alert('Permission to access location was denied');
-            return;
-          }
-          let myCoords = await ExpoLocation.getCurrentPositionAsync({});
-          let myPlace = await fetchPlace(myCoords.coords.latitude, myCoords.coords.longitude)
-            setCoords({
-                longitude: myCoords.coords.longitude,
-                latitude: myCoords.coords.latitude
-            });
-            setSearchterm(myPlace);
-            setLoading(false);
-        })();
+        ExpoLocation.requestForegroundPermissionsAsync()
+        .then(({status}) => {
+            if (status !== 'granted') {
+                alert('Need permission to use this app')
+                return;
+            } 
+            return ExpoLocation.getCurrentPositionAsync({})
+        })
+        .then(({coords}) => {
+            setCoords(`${coords.latitude},${coords.longitude}`)
+        })
     }, []);
 
-
-    //Responds to search location inputs
     useEffect(() => {
-        setLoading(true);
-        fetchWeatherB(coords) // <------------
-        .then((res) => {
-            setForecast({
-                temp: `${res.temperature}°`, 
-                weather: res.text
+        if (coords) {
+            fetchWeather(coords)
+            .then((res) => {
+                setSearchterm(res.name)
+                setForecast({
+                    temp: res.temp,
+                    weather: res.desc
+                });
+                setLoading(false)
             })
-             setLoading(false)
-        })
-    }, [coords]);
+        }
+    }, [coords])
 
     const loadedContent = (
         <View style={[s.container, {flex: 5, justifyContent: 'center'}]}>
