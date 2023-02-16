@@ -40,16 +40,30 @@ export function fetchWeather(coords) {
   .catch((err) => console.log(err))
 };
 
+const headers = {
+  'X-RapidAPI-Key': '7be292e100msh732888e97a53cc2p16a297jsn29ce19925e78',
+  'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
+};
+
+export function fetchPlace(lat, long) {
+  return axios.get('https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi', {
+    params: {
+      lat: lat, lng: long
+    },
+    headers: headers
+  })
+  .then((res) => res.data.Results[0].city)
+  .catch((err) => alert(err))
+};
+
 export function fetchCoordinates(place) {
   return axios.get('https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi', {
     params: { address: place },
-    headers: {
-      'X-RapidAPI-Key': '7be292e100msh732888e97a53cc2p16a297jsn29ce19925e78',
-      'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
-    }
+    headers: headers
   })
     .then((res) => res.data.Results[0])
     .catch((err) => alert(err))
 };
 
 
+ 
