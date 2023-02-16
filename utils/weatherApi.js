@@ -1,69 +1,25 @@
 import axios from 'axios';
 
-//----------- 100 API CALLS A MONTH MAX:
-export function fetchWeatherB(coords) {
-  const {longitude, latitude} = coords;
-  return axios.get('https://yahoo-weather5.p.rapidapi.com/weather', {
-    headers: {
-      'X-RapidAPI-Key': '7be292e100msh732888e97a53cc2p16a297jsn29ce19925e78',
-      'X-RapidAPI-Host': 'yahoo-weather5.p.rapidapi.com'
-    },
-    params: {
-      lat: latitude, 
-      long: longitude, 
-      format: 'json', 
-      u: 'c'
-    }
-  })
-  .then(({data}) => data.current_observation.condition)
-  .catch((err) => console.log(err))
-};
-
-//---------- 20 API CALLS A DAY MAX:
 export function fetchWeather(coords) {
-  const {longitude, latitude} = coords;
-  return axios.get('https://weatherbit-v1-mashape.p.rapidapi.com/forecast/3hourlyy', {
+
+  return axios.get('https://weatherapi-com.p.rapidapi.com/current.json', {
     headers: {
       'X-RapidAPI-Key': '7be292e100msh732888e97a53cc2p16a297jsn29ce19925e78',
-      'X-RapidAPI-Host': 'weatherbit-v1-mashape.p.rapidapi.com'
+      'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
     },
     params: {
-      lon: longitude, lat: latitude
+      q: coords
     }
   })
   .then(({data}) => {
     return {
-      temp: data.data[0].temp,
-      desc: data.data[0].weather.description
+      name: data.location.name,
+      temp: data.current.temp_c,
+      desc:data.current.condition.text
     }
   })
   .catch((err) => console.log(err))
-};
-
-const headers = {
-  'X-RapidAPI-Key': '7be292e100msh732888e97a53cc2p16a297jsn29ce19925e78',
-  'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
-};
-
-export function fetchPlace(lat, long) {
-  return axios.get('https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi', {
-    params: {
-      lat: lat, lng: long
-    },
-    headers: headers
-  })
-  .then((res) => res.data.Results[0].city)
-  .catch((err) => alert(err))
-};
-
-export function fetchCoordinates(place) {
-  return axios.get('https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi', {
-    params: { address: place },
-    headers: headers
-  })
-    .then((res) => res.data.Results[0])
-    .catch((err) => alert(err))
-};
+}
 
 
  
