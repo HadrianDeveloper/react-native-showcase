@@ -2,13 +2,14 @@ import 'react-native-gesture-handler';
 import {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Home from './components/Home';
-import Weather from './components/Weather';
 import { AuthContext } from './contexts/AuthContext';
-import Landing from './components/Landing';
+import Signup from './components/Auth/Signup';
+import Login from './components/Auth/Login';
+import Home from './components/Home';
+import WeatherAPP from './components/Weather/WeatherAPP';
+import TimerAPP from './components/Timer/TimerAPP';
+import Landing from './components/Auth/Landing';
+
 
 export default function App() {
 
@@ -28,7 +29,8 @@ export default function App() {
             </>)
           : <>
               <Stack.Screen name='Home' component={Home} />
-              <Stack.Screen name='Weather' component={Weather} />
+              <Stack.Screen name='WeatherAPP' component={WeatherAPP} />
+              <Stack.Screen name='TimerAPP' component={TimerAPP} />
             </>
           }
 
@@ -36,13 +38,4 @@ export default function App() {
       </NavigationContainer>
     </AuthContext.Provider>
   );
-}
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};

@@ -1,13 +1,13 @@
 import { StyleSheet, Platform, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ImageBackground, ActivityIndicator, StatusBar } from "react-native";
 import * as ExpoLocation from 'expo-location';
-import SearchInput from "./basicComponents/SearchInput";
-import LogoutButton from "./BasicComponents/LogoutButton";
-import getWeatherImage from "../utils/getWeatherImage";
+import SearchInput from "./SearchInput";
+import LogoutButton from "../LogoutButton";
+import getWeatherImage from "./utils/getWeatherImage";
 import { useState, useEffect } from "react";
-import { fetchWeather } from "../utils/weatherApi";
+import { fetchWeather } from "./utils/weatherApi";
 
 
-export default function Weather() {
+export default function WeatherAPP() {
 
     const [searchterm, setSearchterm] = useState(null);
     const [coords, setCoords] = useState(null);

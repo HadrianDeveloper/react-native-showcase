@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { login } from '../Utils';
+import { login } from '../../Utils';
 import { Button, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Login() {
   

@@ -13,9 +13,10 @@ export default function Home() {
     return (
         <View style={s.inner}>
             <Text style={[s.welcome, red && pressed]}>
-              WELCOME TO HADRIAN'S AUTHENTICATION!
+              WELCOME TO HADRIAN'S SHOWCASE APP!
             </Text>
-            <Button title='Weather' onPress={() => nav.navigate('Weather')} />
+            <Button title='Weather' onPress={() => nav.navigate('WeatherAPP')} />
+            <Button title='Task timer' onPress={() => nav.navigate('TimerAPP')} />
             <Pressable onPress={() => {
               if (red) setRed(false)
               else { setRed(true) }

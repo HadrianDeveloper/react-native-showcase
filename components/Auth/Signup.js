@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { isUsernameUnique } from '../Utils';
+import { isUsernameUnique } from '../../Utils';
 
 import { 
     Button, 
@@ -11,7 +11,7 @@ import {
     TouchableWithoutFeedback, 
     Keyboard, 
     Platform } from 'react-native';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Signup() {
 
