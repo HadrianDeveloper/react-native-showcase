@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ToggableForm from "./ToggableForm";
 import EditableTimerCard from "./EditableTimerCard";
 import { useState } from "react";
+import { createTimer } from "./Utils/timerUtils";
 
 export default function TimerApp() {
 
@@ -24,28 +25,32 @@ export default function TimerApp() {
     }
   ]);
 
-    return (
-        <View style={s.container}>
-          <View style={s.headerContainer}>
-            <Text style={s.title}>Hadrian's Timers</Text>
-          </View>
+  function submitTimer(data) {
+    setTimers([createTimer(data), ...timers])
+  };
 
-          <ScrollView style={s.list}>
-            <ToggableForm isOpen={false} />
-            {timers.map((t) => (
-              <EditableTimerCard
-                key={t.id}
-                id={t.id}
-                title={t.title}
-                project={t.project}
-                elapsed={t.elapsed}
-                isRunning={t.isRunning}
-               />
-            ))}
+  return (
+    <View style={s.container}>
+      <View style={s.headerContainer}>
+        <Text style={s.title}>Hadrian's Timers</Text>
+      </View>
 
-          </ScrollView>
-        </View>
-    )
+      <ScrollView style={s.list}>
+        <ToggableForm 
+          submitChange={submitTimer} />
+        {timers.map((t) => (
+          <EditableTimerCard
+            key={t.id}
+            id={t.id}
+            title={t.title}
+            project={t.project}
+            elapsed={t.elapsed}
+            isRunning={t.isRunning}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  )
 };
 
 const s = StyleSheet.create({

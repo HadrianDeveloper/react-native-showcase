@@ -3,11 +3,16 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import TimerButton from "./TimerButton";
 
-export default function TimerForm({id, title, project }) {
+export default function TimerForm({id, title, project, submitChange, handleHideForm}) {
 
     const [newTitle, setNewTitle] = useState(title);
     const [newProject, setNewProject] = useState(project);
+
     const buttonText = id ? 'Update' : 'Create'; 
+
+    function handleSubmit() {
+        submitChange({id, newTitle, newProject});
+    };
 
     return (
         <View style={s.container}>
@@ -35,10 +40,16 @@ export default function TimerForm({id, title, project }) {
             </View>
             
             <View style={s.buttContainer}>
-                <TimerButton small color='#21BA45' title={buttonText} />
+                <TimerButton 
+                    small 
+                    color='#21BA45' 
+                    title={buttonText}
+                    onPress={handleSubmit}
+                    disabled={!newTitle || !newProject} />
                 <TimerButton 
                     small color='DB2828' 
-                    title='Cancel' />
+                    title='Cancel'
+                    onPress={handleHideForm} />
             </View>
         </View>
     )

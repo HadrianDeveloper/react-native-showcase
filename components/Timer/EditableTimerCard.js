@@ -12,7 +12,8 @@ export default function EditableTimerCard({id, title, project, elapsed, isRunnin
             <TimerForm 
                 id={id} 
                 title={title} 
-                project={project} /> : 
+                project={project}
+                handleHideForm={() => setEditFormOpen(false)} /> : 
             <Timer 
                 id={id} 
                 title={title} 
