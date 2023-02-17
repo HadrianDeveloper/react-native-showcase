@@ -1,3 +1,6 @@
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 function pad(numStr, size) {
     let padded = numStr;
     while (padded.length < size) {
@@ -16,4 +19,15 @@ export function millToHuman(ms) {
             pad(seconds.toString(), 2)
         ].join(':');
     return humanized;
+};
+
+export function createTimer({newTitle, newProject}) {
+    const timer = {
+        id: uuidv4(),
+        title: newTitle,
+        project: newProject,
+        elapsed: 0,
+        isRunning: false
+    };
+    return timer;
 };
