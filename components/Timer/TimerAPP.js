@@ -29,6 +29,10 @@ export default function TimerApp() {
     setTimers([createTimer(data), ...timers])
   };
 
+  function handleTimerUpdate(data) {
+
+  };
+
   return (
     <View style={s.container}>
       <View style={s.headerContainer}>
@@ -46,6 +50,7 @@ export default function TimerApp() {
             project={t.project}
             elapsed={t.elapsed}
             isRunning={t.isRunning}
+            handleUpdate={handleTimerUpdate}
           />
         ))}
       </ScrollView>
