@@ -7,9 +7,9 @@ export default function LogoutButton() {
     const {setUserToken} = useContext(AuthContext);
 
     return (
-            <Button
-              title='Log out' 
-              onPress={() => setUserToken(null)} />
+      <Button
+        title='Log out' 
+        onPress={() => setUserToken(null)} />
     )
 };
 
