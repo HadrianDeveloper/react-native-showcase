@@ -7,10 +7,6 @@ export default function LogoutButton() {
 
     return (
         <> 
-        {/* <Button    <----------readd button if better for reusability
-            title='Log out' 
-            color='white'
-            onPress={() => setUserToken(null)} /> */} 
         <Pressable onPress={() => setUserToken(null)}>
             <Text style={{color: 'white', fontSize: 33}}>Log out</Text>
         </Pressable>
