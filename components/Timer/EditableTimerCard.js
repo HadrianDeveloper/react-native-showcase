@@ -2,7 +2,7 @@ import TimerForm from "./TimerForm";
 import Timer from './Timer';
 import { useState } from "react";
 
-export default function EditableTimerCard({id, title, project, elapsed, isRunning, handleUpdate}) {
+export default function EditableTimerCard({id, title, project, elapsed, isRunning, handleUpdate, removeTimer}) {
     
     const [editFormOpen, setEditFormOpen] = useState(false);
 
@@ -26,7 +26,8 @@ export default function EditableTimerCard({id, title, project, elapsed, isRunnin
                 project={project} 
                 elapsed={elapsed} 
                 isRunning={isRunning}
-                openForm={() => setEditFormOpen(true)} />
+                openForm={() => setEditFormOpen(true)}
+                removeTimer={removeTimer} />
         }
         </>
     )
