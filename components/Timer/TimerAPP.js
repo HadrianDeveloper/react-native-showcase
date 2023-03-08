@@ -41,6 +41,15 @@ export default function TimerApp() {
     setTimers(updated)
   };
 
+  function removeTimer(id) {
+    const updated = timers.filter((t) => {
+      if (t.id !== id) {
+        return t
+      }
+    });
+    setTimers(updated)
+  };
+
   return (
     <View style={s.container}>
       <View style={s.headerContainer}>
@@ -59,6 +68,7 @@ export default function TimerApp() {
             elapsed={t.elapsed}
             isRunning={t.isRunning}
             handleUpdate={handleTimerUpdate}
+            removeTimer={removeTimer}
           />
         ))}
       </ScrollView>

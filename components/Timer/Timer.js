@@ -3,9 +3,13 @@ import { millToHuman } from './utils/timerUtils';
 import TimerButton from './TimerButton';
 
 
-export default function Timer({title, project, elapsed, openForm}) {
+export default function Timer({id, title, project, elapsed, openForm, removeTimer}) {
     
     const elapsedStr = millToHuman(elapsed);
+
+    function handleRemove() {
+        removeTimer(id)
+    };
 
     return (
         <View style={s.container}>
@@ -19,7 +23,8 @@ export default function Timer({title, project, elapsed, openForm}) {
                     onPress={openForm} />
                 <TimerButton 
                     color='blue' small 
-                    title='Remove' />
+                    title='Remove'
+                    onPress={handleRemove} />
             </View>
             <TimerButton 
                 color='#21BA45' 
