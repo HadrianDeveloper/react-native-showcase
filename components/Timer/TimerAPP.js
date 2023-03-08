@@ -30,7 +30,15 @@ export default function TimerApp() {
   };
 
   function handleTimerUpdate(data) {
-
+    const updated = timers.map((t) => {
+      if (t.id === data.id) {
+        const {newTitle, newProject} = data;
+        return {...t, newTitle, newProject}
+      } else {
+        return t
+      }
+    })
+    setTimers(updated)
   };
 
   return (

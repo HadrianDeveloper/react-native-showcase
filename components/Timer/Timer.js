@@ -3,7 +3,7 @@ import { millToHuman } from './utils/timerUtils';
 import TimerButton from './TimerButton';
 
 
-export default function Timer({title, project, elapsed, setEditFormOpen}) {
+export default function Timer({title, project, elapsed, openForm}) {
     
     const elapsedStr = millToHuman(elapsed);
 
@@ -13,13 +13,18 @@ export default function Timer({title, project, elapsed, setEditFormOpen}) {
             <Text>{project}</Text>
             <Text style={s.elapsedStr}>{elapsedStr}</Text>
             <View style={s.buttContainer}>
-                <TimerButton color='blue' small title='Edit' />
-                <TimerButton color='blue' small title='Remove' />
+                <TimerButton 
+                    color='blue' small 
+                    title='Edit'
+                    onPress={openForm} />
+                <TimerButton 
+                    color='blue' small 
+                    title='Remove' />
             </View>
             <TimerButton 
                 color='#21BA45' 
                 title='START'
-                onPress={setEditFormOpen} />
+                onPress={() => null} />
         </View>
     )
 };

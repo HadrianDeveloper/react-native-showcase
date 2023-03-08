@@ -8,7 +8,7 @@ export default function EditableTimerCard({id, title, project, elapsed, isRunnin
 
     function handleHideAndUpdate(data) {
         setEditFormOpen(false);
-        handleUpdate(data)
+        handleUpdate(data);
     };
    
     return (
@@ -26,7 +26,7 @@ export default function EditableTimerCard({id, title, project, elapsed, isRunnin
                 project={project} 
                 elapsed={elapsed} 
                 isRunning={isRunning}
-                setEditFormOpen={setEditFormOpen(true)} />
+                openForm={() => setEditFormOpen(true)} />
         }
         </>
     )
