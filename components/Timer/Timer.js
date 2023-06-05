@@ -2,10 +2,9 @@ import { StyleSheet, View, Text } from "react-native";
 import { millToHuman } from './utils/timerUtils';
 import TimerButton from './TimerButton';
 
-
 export default function Timer({id, title, project, elapsed, openForm, removeTimer}) {
     
-    const elapsedStr = millToHuman(elapsed);
+    let elapsedStr;
 
     function handleRemove() {
         removeTimer(id)
@@ -15,7 +14,7 @@ export default function Timer({id, title, project, elapsed, openForm, removeTime
         <View style={s.container}>
             <Text style={s.title}>{title}</Text>
             <Text>{project}</Text>
-            <Text style={s.elapsedStr}>{elapsedStr}</Text>
+            <Text style={s.elapsedStr}>{elapsed}</Text>
             <View style={s.buttContainer}>
                 <TimerButton 
                     color='blue' small 

@@ -77,20 +77,20 @@ export default function TimerApp() {
 };
 
 const s = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    headerContainer: {
-      paddingVertical: 20,
-      borderBottomWidth: 1,
-      borderBottomColor: '#D6D7DA'
-    },
-    title: {
-      textAlign: 'center',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-    list: {
-      paddingBottom: 15,
-    },
-  });
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D6D7DA'
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  list: {
+    paddingBottom: 15,
+  },
+});

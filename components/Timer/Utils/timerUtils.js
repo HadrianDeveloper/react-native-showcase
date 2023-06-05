@@ -9,17 +9,20 @@ function pad(numStr, size) {
     return padded
 };
 
-export function millToHuman(ms) {
+export const millToHuman = ms => {
+    console.log(ms)
     const seconds = Math.floor((ms / 1000) % 60);
     const minutes = Math.floor((ms / 1000 / 60) % 60);
-    const hours = Math.floor((ms / 1000 / 60 / 60));
-        const humanized = [
-            pad(hours.toString(), 2),
-            pad(minutes.toString(), 2),
-            pad(seconds.toString(), 2)
-        ].join(':');
+    const hours = Math.floor(ms / 1000 / 60 / 60);
+  
+    const humanized = [
+      pad(hours.toString(), 2),
+      pad(minutes.toString(), 2),
+      pad(seconds.toString(), 2),
+    ].join(':');
+  
     return humanized;
-};
+  };
 
 export function createTimer({newTitle, newProject}) {
     const timer = {
